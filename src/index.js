@@ -32,7 +32,8 @@ async function YoutubeSearch(searchText) {
         const videoId = await el.$eval('.ytd-thumbnail', a => a.getAttribute('href') );
         const linkThumb = await el.$eval('.yt-img-shadow', a => a.getAttribute('src'));
         const title = await el.$eval('#video-title', a => a.getAttribute('title'));
-        console.log(videoId, linkThumb, title);
+        videos.push({videoId, linkThumb, title});
+        return videos;
       }catch(e) {}
     })
   } catch (e) {}
