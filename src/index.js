@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
-const videos = [];
 async function YoutubeSearch(searchText) {
+  let videos = [];
   try {
     const browserFetcher = puppeteer.createBrowserFetcher();
     const revisionInfo = await browserFetcher.download('639839');
@@ -27,16 +27,18 @@ async function YoutubeSearch(searchText) {
     await page.evaluate('window.scrollTo(2000, 1000)')
     await page.evaluate('window.scrollTo(4000, 2000)')
     const elHandleArray = await page.$$('.ytd-item-section-renderer');
-    elHandleArray.forEach(async el => {
+    for (let index = 0; index < elHandleArray.length; index++) {
+      const el = elHandleArray[index];
       try {
         const videoId = await el.$eval('.ytd-thumbnail', a => a.getAttribute('href') );
         const linkThumb = await el.$eval('.yt-img-shadow', a => a.getAttribute('src'));
         const title = await el.$eval('#video-title', a => a.getAttribute('title'));
-        videos.push({videoId, linkThumb, title});
-        return videos;
+        videos.push({videoId: videoId, linkThumb: linkThumb, title: title});
       }catch(e) {}
-    })
+    }
+    return videos;
   } catch (e) {}
 };
 
 module.exports = {YoutubeSearch: YoutubeSearch}
+
