@@ -1,7 +1,8 @@
 const puppeteer = require('puppeteer');
-var isFirstTime = false;
-async function initBrowser() {
-  const browserFetcher = puppeteer.createBrowserFetcher();
+async function YoutubeSearch(searchText) {
+  let videos = [];
+  try {
+    const browserFetcher = puppeteer.createBrowserFetcher();
     const revisionInfo = await browserFetcher.download('639839');
     const browser = await puppeteer.launch({
       headless: true,
@@ -14,14 +15,6 @@ async function initBrowser() {
       width: 1080,
       height: 1280,
     });
-}
-async function YoutubeSearch(searchText) {
-  let videos = [];
-  try {
-    if(!isFirstTime) {
-      isFirstTime = true;
-      await initBrowser();
-    }
     // await page.goto('https://youtube.com', {
     //   waitUntil: 'networkidle0',
     // });
@@ -41,6 +34,7 @@ async function YoutubeSearch(searchText) {
         const linkThumb = await el.$eval('.yt-img-shadow', a => a.getAttribute('src'));
         const title = await el.$eval('#video-title', a => a.getAttribute('title'));
         videos.push({videoId: videoId, linkThumb: linkThumb, title: title});
+        console.log(title);
       }catch(e) {}
     }
     return videos;
@@ -48,3 +42,4 @@ async function YoutubeSearch(searchText) {
 };
 
 module.exports = {YoutubeSearch: YoutubeSearch}
+YoutubeSearch('sss')
