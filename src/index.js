@@ -1,8 +1,7 @@
 const puppeteer = require('puppeteer');
-async function YoutubeSearch(searchText) {
-  let videos = [];
-  try {
-    const browserFetcher = puppeteer.createBrowserFetcher();
+var isFirstTime = false;
+async function initBrowser() {
+  const browserFetcher = puppeteer.createBrowserFetcher();
     const revisionInfo = await browserFetcher.download('639839');
     const browser = await puppeteer.launch({
       headless: true,
@@ -15,6 +14,14 @@ async function YoutubeSearch(searchText) {
       width: 1080,
       height: 1280,
     });
+}
+async function YoutubeSearch(searchText) {
+  let videos = [];
+  try {
+    if(!isFirstTime) {
+      isFirstTime = true;
+      initBrowser();
+    }
     // await page.goto('https://youtube.com', {
     //   waitUntil: 'networkidle0',
     // });
