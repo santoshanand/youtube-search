@@ -15,10 +15,10 @@ async function YoutubeSearch(searchText) {
       width: 1080,
       height: 1280,
     });
-    await page.goto('https://youtube.com', {
-      waitUntil: 'networkidle0',
-    });
-    await page.goto('https://www.youtube.com/results?search_query='+searchText);
+    // await page.goto('https://youtube.com', {
+    //   waitUntil: 'networkidle0',
+    // });
+    await page.goto('https://www.youtube.com/results?search_query='+searchText, {waitUntil: 'networkidle0'});
     await page.waitForSelector('ytd-video-renderer');
     await page.evaluate('window.scrollTo(0, 1000)')
     // await page.evaluate('window.scrollTo(1000, 2000)')
