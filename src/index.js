@@ -20,7 +20,7 @@ async function YoutubeSearch(searchText) {
   try {
     if(!isFirstTime) {
       isFirstTime = true;
-      initBrowser();
+      await initBrowser();
     }
     // await page.goto('https://youtube.com', {
     //   waitUntil: 'networkidle0',
