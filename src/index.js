@@ -21,11 +21,11 @@ async function YoutubeSearch(searchText) {
     await page.goto('https://www.youtube.com/results?search_query='+searchText);
     await page.waitForSelector('ytd-video-renderer');
     await page.evaluate('window.scrollTo(0, 1000)')
-    await page.evaluate('window.scrollTo(1000, 2000)')
-    await page.evaluate('window.scrollTo(2000, 4000)')
-    await page.evaluate('window.scrollTo(1000, 0)')
-    await page.evaluate('window.scrollTo(2000, 1000)')
-    await page.evaluate('window.scrollTo(4000, 2000)')
+    // await page.evaluate('window.scrollTo(1000, 2000)')
+    // await page.evaluate('window.scrollTo(2000, 4000)')
+    // await page.evaluate('window.scrollTo(1000, 0)')
+    // await page.evaluate('window.scrollTo(2000, 1000)')
+    // await page.evaluate('window.scrollTo(4000, 2000)')
     const elHandleArray = await page.$$('.ytd-item-section-renderer');
     for (let index = 0; index < elHandleArray.length; index++) {
       const el = elHandleArray[index];
