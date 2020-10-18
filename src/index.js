@@ -34,7 +34,6 @@ async function YoutubeSearch(searchText) {
         const linkThumb = await el.$eval('.yt-img-shadow', a => a.getAttribute('src'));
         const title = await el.$eval('#video-title', a => a.getAttribute('title'));
         videos.push({videoId: videoId, linkThumb: linkThumb, title: title});
-        console.log(title);
       }catch(e) {}
     }
     return videos;
@@ -42,4 +41,3 @@ async function YoutubeSearch(searchText) {
 };
 
 module.exports = {YoutubeSearch: YoutubeSearch}
-YoutubeSearch('sss')
