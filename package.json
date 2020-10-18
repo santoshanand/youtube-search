@@ -1,0 +1,35 @@
+{
+  "name": "youtube-search",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index"
+  },
+  "author": "Santosh Anand",
+  "license": "MIT",
+  "dependencies": {
+    "puppeteer": "^1.13.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/santoshanand/youtube-search.git"
+  },
+  "keywords": [
+    "youtube",
+    "search",
+    "search",
+    "youtube",
+    "videos",
+    "videos",
+    "youtube",
+    "without",
+    "api",
+    "key"
+  ],
+  "bugs": {
+    "url": "https://github.com/santoshanand/youtube-search/issues"
+  },
+  "homepage": "https://github.com/santoshanand/youtube-search#readme",
+  "description": ""
+}
