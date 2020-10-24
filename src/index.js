@@ -1,24 +1,35 @@
 const puppeteer = require('puppeteer');
 
-
+let browserInit = false;
+let page = null;
+let browser = null;
+async function InitBrowser() {
+  return new Promise(async(resolve, reject) => {
+    if(!browserInit) {
+      browserInit = true;
+      browser = await puppeteer.launch({ headless: true });
+      page = await browser.newPage();
+      await page.setViewport({ width: 1920, height: 1080 });
+      await page.setRequestInterception(true);
+      
+      page.on('request', (req) => {
+          if(req.resourceType() == 'stylesheet' || req.resourceType() == 'font'){
+              req.abort();
+          }
+          else {
+              req.continue();
+          }
+      });
+      resolve({page, browser})
+    }
+    resolve({page, browser});
+  });
+  
+}
 
 
 async function YoutubeSearch(searchText) {
   let videos = [];
-  let browser = await puppeteer.launch({ headless: true });
-  let page = await browser.newPage();
-  await page.setViewport({ width: 1920, height: 1080 });
-  await page.setRequestInterception(true);
-  
-  page.on('request', (req) => {
-      if(req.resourceType() == 'stylesheet' || req.resourceType() == 'font'){
-          req.abort();
-      }
-      else {
-          req.continue();
-      }
-  });
-  
   await page.goto('https://www.youtube.com/results?search_query='+searchText, {waitUntil: 'networkidle0'});
   await page.waitForSelector('ytd-video-renderer');
   const elHandleArray = await page.$$('.ytd-item-section-renderer');
@@ -31,8 +42,6 @@ async function YoutubeSearch(searchText) {
         videos.push({videoId: videoId, linkThumb: linkThumb, title: title});
       }catch(e) {}
     }
-    await page.close();
-    await browser.close();
     return videos;
 }
 
@@ -80,6 +89,6 @@ async function YoutubeSearch(searchText) {
 };
 */
 
-module.exports = {YoutubeSearch: YoutubeSearch}
+module.exports = {YoutubeSearch: YoutubeSearch, InitBrowser}
 
-YoutubeSearch('demo')
+// YoutubeSearch('demo')
